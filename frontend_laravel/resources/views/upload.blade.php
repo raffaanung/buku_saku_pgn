@@ -180,7 +180,7 @@
             
             async fetchCategories() {
                 try {
-                    const response = await fetch('http://localhost:8000/categories', {
+                    const response = await fetch('{{ config('services.python_api.url') }}/categories', {
                         headers: { 'Authorization': `Bearer ${token}` }
                     });
                     if (response.ok) {
@@ -198,7 +198,7 @@
                 this.addingCategory = true;
                 
                 try {
-                    const response = await fetch('http://localhost:8000/categories', {
+                    const response = await fetch('{{ config('services.python_api.url') }}/categories', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -237,7 +237,7 @@
                 formData.append('description', this.description);
                 
                 try {
-                    const response = await fetch('http://localhost:8000/documents/upload', {
+                    const response = await fetch('{{ config('services.python_api.url') }}/documents/upload', {
                         method: 'POST',
                         headers: { 'Authorization': `Bearer ${token}` },
                         body: formData

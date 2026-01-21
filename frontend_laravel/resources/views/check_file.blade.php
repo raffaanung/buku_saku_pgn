@@ -53,7 +53,7 @@
                                 <div>
                                     <div class="font-medium text-slate-800" x-text="row.title"></div>
                                     <div class="text-xs text-slate-400 mt-0.5" x-text="formatDate(row.created_at)"></div>
-                                    <a :href="`http://localhost:8000${row.file_url}`" target="_blank" class="text-xs text-blue-600 hover:underline mt-1 inline-block">Lihat File</a>
+                                    <a :href="row.file_url.startsWith('http') ? row.file_url : `{{ config('services.python_api.url') }}${row.file_url}`" target="_blank" class="text-xs text-blue-600 hover:underline mt-1 inline-block">Lihat File</a>
                                 </div>
                             </div>
                         </td>
@@ -137,7 +137,7 @@
             
             async fetchDocuments() {
                 try {
-                    const response = await fetch('http://localhost:8000/documents/', {
+                    const response = await fetch('{{ config('services.python_api.url') }}/documents/', {
                         headers: { 'Authorization': `Bearer ${token}` }
                     });
                     
@@ -172,7 +172,7 @@
                 
                 this.actionLoading = id;
                 try {
-                    const response = await fetch(`http://localhost:8000/documents/${id}/status`, {
+                    const response = await fetch(`{{ config('services.python_api.url') }}/documents/${id}/status`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',

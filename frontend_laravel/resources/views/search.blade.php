@@ -139,7 +139,7 @@
                 
                 try {
                     // Using the same endpoint as dashboard
-                    const response = await fetch(`http://localhost:8000/documents/search?q=${encodeURIComponent(this.q)}`, {
+                    const response = await fetch(`{{ config('services.python_api.url') }}/documents/search?q=${encodeURIComponent(this.q)}`, {
                         headers: {
                             'Authorization': `Bearer ${token}`,
                             'Accept': 'application/json'
@@ -169,7 +169,7 @@
                 try {
                     // TODO: Implement actual API call when backend is ready
                     // const method = doc.is_favorite ? 'POST' : 'DELETE';
-                    // await fetch(`http://localhost:8000/favorites/${doc.id}`, { ... });
+                    // await fetch(`{{ config('services.python_api.url') }}/favorites/${doc.id}`, { ... });
                     console.log('Toggled favorite for:', doc.id, doc.is_favorite);
                 } catch (err) {
                     // Revert on error

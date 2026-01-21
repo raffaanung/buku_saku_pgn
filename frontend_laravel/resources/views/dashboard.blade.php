@@ -46,7 +46,7 @@
                 <template x-for="r in results" :key="r.id">
                     <div class="relative p-4 border border-slate-200 rounded-lg bg-white hover:bg-slate-50 transition-all hover:shadow-md group">
                         
-                        <a :href="r.file_url ? (r.file_url.startsWith('http') ? r.file_url : 'http://localhost:8000' + r.file_url) : '#'" target="_blank" class="block">
+                        <a :href="r.file_url ? (r.file_url.startsWith('http') ? r.file_url : '{{ config('services.python_api.url') }}' + r.file_url) : '#'" target="_blank" class="block">
                             <div class="flex items-start justify-between">
                                 <div class="flex items-start gap-3">
                                     <div class="bg-blue-50 text-blue-600 p-2 rounded shrink-0">
@@ -107,7 +107,7 @@
                 
                 try {
                     // Use list endpoint which supports optional q param
-                    const url = `http://localhost:8000/documents/?q=${encodeURIComponent(this.q)}`;
+                    const url = `{{ config('services.python_api.url') }}/documents/?q=${encodeURIComponent(this.q)}`;
                     
                     const response = await fetch(url, {
                         headers: {

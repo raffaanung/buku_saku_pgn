@@ -40,7 +40,7 @@
                         <td class="px-6 py-4 font-medium text-slate-800">
                             <div class="flex items-center gap-2">
                                 <span class="uppercase text-xs font-bold bg-slate-200 px-1.5 py-0.5 rounded text-slate-600">FILE</span>
-                                <a :href="row.file_url ? 'http://localhost:8000' + row.file_url : '#'" target="_blank" class="hover:text-blue-600 hover:underline" x-text="row.title"></a>
+                                <a :href="row.file_url ? (row.file_url.startsWith('http') ? row.file_url : '{{ config('services.python_api.url') }}' + row.file_url) : '#'" target="_blank" class="hover:text-blue-600 hover:underline" x-text="row.title"></a>
                             </div>
                         </td>
                         <td class="px-6 py-4">
@@ -104,7 +104,7 @@
             
             async fetchHistory() {
                 try {
-                    const response = await fetch('http://localhost:8000/documents/', {
+                    const response = await fetch('{{ config('services.python_api.url') }}/documents/', {
                         headers: { 'Authorization': `Bearer ${token}` }
                     });
                     
@@ -133,7 +133,7 @@
                 
                 this.actionLoading = id;
                 try {
-                    const response = await fetch(`http://localhost:8000/documents/${id}/status`, {
+                    const response = await fetch(`{{ config('services.python_api.url') }}/documents/${id}/status`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',

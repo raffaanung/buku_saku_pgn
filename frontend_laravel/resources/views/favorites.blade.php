@@ -73,7 +73,7 @@
                 this.loading = true;
                 try {
                     // TODO: Replace with actual API endpoint
-                    // const res = await fetch('http://localhost:8000/favorites', ...);
+                    // const res = await fetch('{{ config('services.python_api.url') }}/favorites', ...);
                     // this.favorites = await res.json();
 
                     // Mock data
