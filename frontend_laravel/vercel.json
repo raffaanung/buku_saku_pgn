@@ -12,10 +12,6 @@
         }
     ],
     "routes": [
-        {
-            "src": "/build/(.*)",
-            "dest": "/build/$1"
-        },
         { "handle": "filesystem" },
         {
             "src": "/(.*)",
@@ -26,6 +22,8 @@
         "APP_ENV": "production",
         "APP_DEBUG": "true",
         "APP_URL": "https://${VERCEL_URL}",
+        "APP_KEY": "base64:GrOUHLyNamuqICcjae5rVYjfjdD2U69M53i2FwGtdGw=",
+        "PYTHON_API_URL": "https://buku-saku-backend.vercel.app",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
         "APP_PACKAGES_CACHE": "/tmp/packages.php",
