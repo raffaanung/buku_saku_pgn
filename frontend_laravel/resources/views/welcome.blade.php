@@ -46,7 +46,7 @@
         @endif
         
         <div class="mt-10 text-xs text-slate-400">
-            &copy; {{ date('Y') }} Perusahaan Gas Negara. All rights reserved.
+            &copy; {{ date('Y') }} Perusahaan Gas Negara. All rights reserved. (v1.0)
         </div>
     </div>
 </body>
