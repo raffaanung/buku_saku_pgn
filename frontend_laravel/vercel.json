@@ -22,6 +22,7 @@
         "APP_ENV": "production",
         "APP_DEBUG": "true",
         "APP_URL": "https://${VERCEL_URL}",
+        "ASSET_URL": "https://${VERCEL_URL}",
         "APP_KEY": "base64:GrOUHLyNamuqICcjae5rVYjfjdD2U69M53i2FwGtdGw=",
         "PYTHON_API_URL": "https://buku-saku-backend.vercel.app",
         "APP_CONFIG_CACHE": "/tmp/config.php",
