@@ -11,9 +11,14 @@ import os
 
 app = FastAPI(title="Buku Saku API (Python)")
 
-# Ensure uploads directory exists
-os.makedirs("uploads", exist_ok=True)
-app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
+# Ensure uploads directory exists (Handle Vercel Read-Only FS)
+try:
+    os.makedirs("uploads", exist_ok=True)
+    app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
+except OSError:
+    print("Could not create uploads directory (likely read-only filesystem). Skipping mount.")
+    # On Vercel, we don't need local uploads if using Google Drive
+
 
 app.add_middleware(
     CORSMiddleware,

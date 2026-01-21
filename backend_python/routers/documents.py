@@ -13,8 +13,15 @@ except ImportError:
     drive_service = None
 
 router = APIRouter(prefix="/documents", tags=["documents"])
-UPLOAD_DIR = "uploads"
-os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+# Handle Read-Only Filesystem on Vercel
+try:
+    UPLOAD_DIR = "uploads"
+    os.makedirs(UPLOAD_DIR, exist_ok=True)
+except OSError:
+    # Fallback to /tmp for serverless environments
+    UPLOAD_DIR = "/tmp/uploads"
+    os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 # Configuration
 ENABLE_GDRIVE = os.getenv("ENABLE_GDRIVE", "False").lower() == "true"
