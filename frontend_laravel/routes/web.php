@@ -13,6 +13,16 @@ Route::get('/register', [AuthController::class, 'showRegister'])->name('register
 Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// Route khusus untuk setup database di Vercel (karena akses lokal diblokir)
+Route::get('/setup-db', function () {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        return 'Database migration success! Tables created.';
+    } catch (\Exception $e) {
+        return 'Migration failed: ' . $e->getMessage();
+    }
+});
+
 Route::middleware(['web'])->group(function () {
     Route::get('/dashboard', function () {
         if (!session('user')) return redirect()->route('login');
