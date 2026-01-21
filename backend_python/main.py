@@ -4,7 +4,11 @@ from routers import auth, documents, users, categories
 from database import engine, Base
 
 # Create tables if not exist (for dev)
-Base.metadata.create_all(bind=engine)
+# Wrap in try-except to prevent crash on Vercel if DB is unreachable
+try:
+    Base.metadata.create_all(bind=engine)
+except Exception as e:
+    print(f"Error creating tables: {e}")
 
 from fastapi.staticfiles import StaticFiles
 import os
