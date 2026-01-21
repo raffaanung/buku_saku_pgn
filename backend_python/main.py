@@ -1,14 +1,18 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import auth, documents, users, categories
 from database import engine, Base
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Create tables if not exist (for dev)
 # Wrap in try-except to prevent crash on Vercel if DB is unreachable
 try:
     Base.metadata.create_all(bind=engine)
 except Exception as e:
-    print(f"Error creating tables: {e}")
+    logger.error(f"Error creating tables: {e}")
 
 from fastapi.staticfiles import StaticFiles
 import os
@@ -20,9 +24,7 @@ try:
     os.makedirs("uploads", exist_ok=True)
     app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 except OSError:
-    print("Could not create uploads directory (likely read-only filesystem). Skipping mount.")
-    # On Vercel, we don't need local uploads if using Google Drive
-
+    logger.warning("Could not create uploads directory (likely read-only filesystem). Skipping mount.")
 
 app.add_middleware(
     CORSMiddleware,
@@ -32,10 +34,30 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(auth.router)
-app.include_router(users.router)
-app.include_router(documents.router)
-app.include_router(categories.router)
+# Import routers with error handling for debugging
+try:
+    from routers import auth
+    app.include_router(auth.router)
+except Exception as e:
+    logger.error(f"Failed to load auth router: {e}")
+
+try:
+    from routers import users
+    app.include_router(users.router)
+except Exception as e:
+    logger.error(f"Failed to load users router: {e}")
+
+try:
+    from routers import documents
+    app.include_router(documents.router)
+except Exception as e:
+    logger.error(f"Failed to load documents router: {e}")
+
+try:
+    from routers import categories
+    app.include_router(categories.router)
+except Exception as e:
+    logger.error(f"Failed to load categories router: {e}")
 
 @app.get("/")
 def read_root():
