@@ -16,10 +16,7 @@
             "src": "/build/(.*)",
             "dest": "/build/$1"
         },
-        {
-            "src": "/(css|js|images|fonts)/(.*)",
-            "dest": "/$1/$2"
-        },
+        { "handle": "filesystem" },
         {
             "src": "/(.*)",
             "dest": "/api/index.php"
