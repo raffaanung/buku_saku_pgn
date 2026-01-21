@@ -16,10 +16,6 @@
             "dest": "/public/build/$1"
         },
         {
-            "src": "/(css|js|images|storage)/(.*)",
-            "dest": "/public/$1/$2"
-        },
-        {
             "src": "/favicon.ico",
             "dest": "/public/favicon.ico"
         },
@@ -36,7 +32,6 @@
         "APP_ENV": "production",
         "APP_DEBUG": "true",
         "APP_URL": "https://${VERCEL_URL}",
-        "ASSET_URL": "https://${VERCEL_URL}",
         "APP_KEY": "base64:GrOUHLyNamuqICcjae5rVYjfjdD2U69M53i2FwGtdGw=",
         "PYTHON_API_URL": "https://buku-saku-backend.vercel.app",
         "APP_CONFIG_CACHE": "/tmp/config.php",
