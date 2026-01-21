@@ -3,16 +3,30 @@
     "builds": [
         {
             "src": "package.json",
-            "use": "@vercel/static-build",
-            "config": { "distDir": "public" }
+            "use": "@vercel/static-build"
         },
         {
-            "src": "api/*.php",
+            "src": "api/index.php",
             "use": "vercel-php@0.7.1"
         }
     ],
     "routes": [
-        { "handle": "filesystem" },
+        {
+            "src": "/build/(.*)",
+            "dest": "/public/build/$1"
+        },
+        {
+            "src": "/(css|js|images|storage)/(.*)",
+            "dest": "/public/$1/$2"
+        },
+        {
+            "src": "/favicon.ico",
+            "dest": "/public/favicon.ico"
+        },
+        {
+            "src": "/robots.txt",
+            "dest": "/public/robots.txt"
+        },
         {
             "src": "/(.*)",
             "dest": "/api/index.php"
